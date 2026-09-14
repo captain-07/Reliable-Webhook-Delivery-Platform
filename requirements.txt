@@ -2,23 +2,22 @@ fastapi
 uvicorn[standard]
 
 sqlalchemy
-psycopg2-binary
+sqlalchemy[asyncio]
 alembic
+psycopg2-binary  # for the sync engine (Celery tasks)
+asyncpg          # for the async engine (FastAPI routes)
 
 pydantic
 pydantic-settings
 
 redis
 celery
-
 httpx
 
 python-dotenv
-
 python-multipart
 
 passlib[bcrypt]
 
 pytest
 pytest-asyncio
-httpx

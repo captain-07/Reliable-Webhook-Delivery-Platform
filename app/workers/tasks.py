@@ -127,6 +127,9 @@ def deliver_webhook(
 
             db.commit()
 
+            if status == DeliveryStatus.DEAD:
+                return  # done — no more retries, no exception needed
+
             # Tell Celery to retry
             raise self.retry(exc=exc)
 
