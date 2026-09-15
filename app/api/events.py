@@ -6,10 +6,12 @@ from app.core.database import get_db
 from app.models.event import Event
 from app.schemas.event import EventCreate, EventResponse
 from app.workers.tasks import fan_out_event
+from app.core.rate_limit import limiter
 
 router = APIRouter()
 
 @router.post("/events", response_model=EventResponse, status_code=202)
+@limiter.limit("100/minute")
 async def ingest_event(
     payload: EventCreate,
     idempotency_key: str | None = Header(default=None),
