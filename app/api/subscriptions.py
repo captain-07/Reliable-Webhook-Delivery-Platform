@@ -13,7 +13,7 @@ async def create_subscription(
     payload: SubscriptionCreate,
     db: AsyncSession = Depends(get_db),
 ):
-    sub = Subscription(**payload.model_dump())
+    sub = Subscription(**payload.model_dump(mode="json"))
     db.add(sub)
     await db.commit()
     await db.refresh(sub)

@@ -8,7 +8,9 @@ from app.schemas.event import EventCreate, EventResponse
 from app.workers.tasks import fan_out_event
 from app.core.rate_limit import limiter
 
-router = APIRouter()
+from app.core.security import verify_api_key
+
+router = APIRouter(dependencies=[Depends(verify_api_key)])
 
 @router.post("/events", response_model=EventResponse, status_code=202)
 @limiter.limit("100/minute")

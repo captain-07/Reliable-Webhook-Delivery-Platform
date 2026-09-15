@@ -8,11 +8,14 @@ from sqlalchemy import engine_from_config, pool
 from app.core.database import Base
 from app.models.event import Event
 from app.models.subscription import Subscription
+from app.models.delivery_attempt import DeliveryAttempt
 
 
 # Alembic configuration object
 config = context.config
 
+from app.core.config import settings
+config.set_main_option("sqlalchemy.url", settings.SYNC_DATABASE_URL)
 
 # Configure Python logging
 if config.config_file_name is not None:
