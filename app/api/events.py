@@ -1,5 +1,5 @@
 # app/api/events.py
-from fastapi import APIRouter, Depends, Header
+from fastapi import APIRouter, Depends, Header, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from app.core.database import get_db
@@ -15,6 +15,7 @@ router = APIRouter(dependencies=[Depends(verify_api_key)])
 @router.post("/events", response_model=EventResponse, status_code=202)
 @limiter.limit("100/minute")
 async def ingest_event(
+    request: Request,
     payload: EventCreate,
     idempotency_key: str | None = Header(default=None),
     db: AsyncSession = Depends(get_db),

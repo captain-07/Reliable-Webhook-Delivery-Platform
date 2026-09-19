@@ -76,6 +76,9 @@ All endpoints except `/health` require an `X-API-Key` header.
 ## Running locally
 
 ```bash
+# Run the API from the repository root
+uvicorn app.main:app --reload
+
 # 1. Start the full stack
 docker compose up -d
 
